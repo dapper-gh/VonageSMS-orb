@@ -3,19 +3,19 @@ description: >
 parameters:
   api_key:
     type: string
-    default: "$VONAGE_API_KEY"
+    default: $VONAGE_API_KEY
     description: "Your Vonage API key"
   api_secret:
     type: string
-    default: "$VONAGE_API_SECRET"
+    default: $VONAGE_API_SECRET
     description: "Your Vonage API secret"
   vonage_number:
     type: string
-    default: "$VONAGE_NUMBER"
+    default: $VONAGE_NUMBER
     description: "The number associated with your Vonage account"
   recipient:
     type: string
-    default: "$VONAGE_RECIPIENT"
+    default: $VONAGE_RECIPIENT
     description: "The recipient of the SMS"
   message:
     type: string
@@ -25,10 +25,15 @@ steps:
   - jq/install
   - run:
       name: Send request
-      environment:
-        VONAGE_API_KEY: <<parameters.api_key>>
-        VONAGE_API_SECRET: <<parameters.api_secret>>
-        VONAGE_NUMBER: <<parameters.vonage_number>>
-        VONAGE_RECIPIENT: <<parameters.recipient>>
-        VONAGE_MESSAGE: <<parameters.message>>
-      command: <<include(scripts/smscurl.sh)>>
+      command: |
+        CURL_RESPONSE=$(curl -X "POST" "https://rest.nexmo.com/sms/json" \
+          -d "from=<<parameters.vonage_number>>" \
+          -d "text=<<parameters.message>>" \
+          -d "to=<<parameters.recipient>>" \
+          -d "api_key=<<parameters.api_key>>" \
+          -d "api_secret=<<parameters.api_secret>>")
+        EXIT_CODE=$(echo "$CURL_RESPONSE" | jq -r ".messages[0].status")
+        echo "-- CURL RESPONSE BELOW --"
+        echo "$CURL_RESPONSE"
+        exit "$EXIT_CODE"
+
