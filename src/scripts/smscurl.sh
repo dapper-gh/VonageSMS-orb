@@ -1,5 +1,5 @@
 CURL_RESPONSE=$(curl -X "POST" "https://rest.nexmo.com/sms/json" \
-  -d "from=$VONAGE_NUMEBR" \
+  -d "from=$VONAGE_NUMBER" \
   -d "text=$VONAGE_MESSAGE" \
   -d "to=$VONAGE_RECIPIENT" \
   -d "api_key=$VONAGE_API_KEY" \
