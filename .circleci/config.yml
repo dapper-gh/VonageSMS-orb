@@ -12,5 +12,5 @@ jobs:
       - image: cimg/base:stable
     steps:
       - checkout
-      - vonage-sms/text:
-        message: "Hello, world!"
+      - vonage-sms/sms:
+          message: "Hello, world!"

@@ -8,7 +8,7 @@ usage:
   workflows:
     use-my-orb:
       jobs:
-        - vonage-sms/text:
+        - vonage-sms/sms:
             api_key: "no api key for you"
             api_secret: "no api secret for you"
             vonage_number: "15556667777"
