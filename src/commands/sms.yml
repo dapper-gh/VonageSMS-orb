@@ -1,0 +1,33 @@
+description: >
+  Sends an SMS using the Vonage API.
+parameters:
+  api_key:
+    type: string
+    default: "$VONAGE_API_KEY"
+    description: "Your Vonage API key"
+  api_secret:
+    type: string
+    default: "$VONAGE_API_SECRET"
+    description: "Your Vonage API secret"
+  vonage_number:
+    type: string
+    default: "$VONAGE_NUMBER"
+    description: "The number associated with your Vonage account"
+  recipient:
+    type: string
+    default: "$VONAGE_RECIPIENT"
+    description: "The recipient of the SMS"
+  message:
+    type: string
+    default: "Hello, world!"
+    description: "The message to send to the recipient"
+steps:
+  - run:
+      name: Send request
+      environment:
+        VONAGE_API_KEY: <<parameters.api_key>>
+        VONAGE_API_SECRET: <<parameters.api_secret>>
+        VONAGE_NUMBER: <<parameters.vonage_number>>
+        VONAGE_RECIPIENT: <<parameters.recipient>>
+        VONAGE_MESSAGE: <<parameters.message>>
+      command: <<include(scripts/smscurl.sh)>>
