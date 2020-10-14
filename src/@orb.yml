@@ -1,0 +1,7 @@
+version: 2.1
+
+description: >
+  This orb allows one to send an SMS through the Vonage API.
+
+display:
+  source_url: "https://github.com/dapper-gh/VonageSMS-orb

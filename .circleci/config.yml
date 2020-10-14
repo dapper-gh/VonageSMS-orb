@@ -1,0 +1,16 @@
+version: 2.1
+
+orbs:
+  vonage-sms: dapper/vonage-sms@dev:alpha
+  orb-tools: circleci/orb-tools@10.0
+  bats: circleci/bats@1.0
+  shellcheck: circleci/shellcheck@2.0
+
+jobs:
+  test-1:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - vonage-sms/text:
+        message: "Hello, world!"

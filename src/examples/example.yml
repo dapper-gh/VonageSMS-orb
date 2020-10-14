@@ -1,0 +1,16 @@
+description: >
+  Example orb usage
+
+usage:
+  version: 2.1
+  orbs:
+    vonage-sms: dapper/vonage-sms@1.0.0
+  workflows:
+    use-my-orb:
+      jobs:
+        - vonage-sms/text:
+            api_key: "no api key for you"
+            api_secret: "no api secret for you"
+            vonage_number: "15556667777"
+            recipient: "15554206969"
+            message: "Just saying hi <3"
