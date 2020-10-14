@@ -1,4 +1,4 @@
-# Vonage SMS Orb
+# [Vonage SMS Orb](https://circleci.com/orbs/registry/orb/dapper/vonage-sms)
 This is an orb for [CircleCI](https://circleci.com/).
 It exposes commands to send an SMS through the Vonage API.
 
