@@ -35,8 +35,8 @@ steps:
             --arg recipient "<<parameters.recipient>>" \
             --arg message "<<parameters.message>>" '
             {
-              "from": { "type": "whatsapp", "id": $sender },
-              "to": { "type": "whatsapp", "id": $recipient },
+              "from": { "type": "whatsapp", "number": $sender },
+              "to": { "type": "whatsapp", "number": $recipient },
               "message": {
                 "content": {
                   "type": "text",
