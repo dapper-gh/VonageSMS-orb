@@ -11,12 +11,12 @@ parameters:
     description: "Your Vonage API secret"
   vonage_number:
     type: string
-    default: $VONAGE_NUMBER
-    description: "The number associated with your Vonage account"
+    default: $VONAGE_SMS_NUMBER
+    description: "The SMS phone number associated with your Vonage account"
   recipient:
     type: string
-    default: $VONAGE_RECIPIENT
-    description: "The recipient of the SMS"
+    default: $VONAGE_RECIPIENT_PHONE
+    description: "The phone number of the recipient of the SMS"
   message:
     type: string
     default: "Hello, world!"
@@ -36,4 +36,3 @@ steps:
         echo "-- CURL RESPONSE BELOW --"
         echo "$CURL_RESPONSE"
         exit "$EXIT_CODE"
-

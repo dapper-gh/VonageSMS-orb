@@ -1,0 +1,16 @@
+description: >
+  An example of sending a Facebook Messenger message through the Vonage API using dapper/vonage-sms
+
+usage:
+  version: 2.1
+  orbs:
+    vonage-sms: dapper/vonage-sms@volatile # Don't actually use @volatile. Semantic versioning is a thing.
+  workflows:
+    vonage:
+      jobs:
+        - vonage-sms/sms:
+            api_key: "f00dbabe"
+            api_secret: "ABCDEFGHI"
+            sender_id: "12345678901337"
+            recipient: "13370000000000"
+            message: "Hello, test!"

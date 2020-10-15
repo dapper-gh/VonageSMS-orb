@@ -43,7 +43,10 @@ workflows:
   integration-test_deploy:
     when: << pipeline.parameters.run-integration-tests >>
     jobs:
-      - test-1
+      - test-sms
+      - test-facebook
+      - test-whatsapp
+      - test-viber
       - orb-tools/dev-promote-prod-from-commit-subject:
           orb-name: dapper/vonage-sms
           context: publish
@@ -51,16 +54,48 @@ workflows:
           fail-if-semver-not-indicated: true
           publish-version-tag: false
           requires:
-            - test-1
+            - test-sms
+            - test-facebook
+            - test-whatsapp
+            - test-viber
           filters:
             branches:
               only: master
 
 jobs:
-  test-1:
+  test-sms:
     docker:
       - image: cimg/base:stable
     steps:
       - checkout
       - vonage-sms/sms:
-          message: "Hello, world!"
+          message: "Hello, world! ($CIRCLE_BUILD_ID)"
+          vonage_number: "$VONAGE_SMS_TEST_SENDER"
+          recipient: "$VONAGE_SMS_TEST_RECIPIENT"
+  test-facebook:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - vonage-sms/facebook-messenger:
+          message: "Hello, world! ($CIRCLE_BUILD_ID)"
+          sender_id: "$VONAGE_FB_TEST_SENDER"
+          recipient: "$VONAGE_FB_TEST_RECIPIENT"
+  test-whatsapp:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - vonage-sms/whatsapp:
+          message: "Hello, world! ($CIRCLE_BUILD_ID)"
+          vonage_number: "$VONAGE_WHATSAPP_TEST_SENDER"
+          recipient: "$VONAGE_WHATSAPP_TEST_RECIPIENT"
+  test-viber:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - vonage-sms/viber:
+          message: "Hello, world! ($CIRCLE_BUILD_ID)"
+          sender_id: "$VONAGE_VIBER_TEST_SENDER"
+          recipient: "$VONAGE_VIBER_TEST_RECIPIENT"
