@@ -4,6 +4,12 @@ orbs:
   vonage-sms: dapper/vonage-sms@<<pipeline.parameters.dev-orb-version>>
   orb-tools: circleci/orb-tools@10.0
 
+executors:
+  small:
+    docker:
+      - image: cimg/base:stable
+    resource_class: small
+
 # Pipeline Parameters
 ## These parameters are used internally by orb-tools. Skip to the Jobs section.
 parameters:
@@ -64,8 +70,7 @@ workflows:
 
 jobs:
   test-sms:
-    docker:
-      - image: cimg/base:stable
+    executor: small
     steps:
       - checkout
       - vonage-sms/sms:
@@ -73,8 +78,7 @@ jobs:
           vonage_number: "$VONAGE_SMS_TEST_SENDER"
           recipient: "$VONAGE_SMS_TEST_RECIPIENT"
   test-facebook:
-    docker:
-      - image: cimg/base:stable
+    executor: small
     steps:
       - checkout
       - vonage-sms/facebook-messenger:
@@ -82,8 +86,7 @@ jobs:
           sender_id: "$VONAGE_FB_TEST_SENDER"
           recipient: "$VONAGE_FB_TEST_RECIPIENT"
   test-whatsapp:
-    docker:
-      - image: cimg/base:stable
+    executor: small
     steps:
       - checkout
       - vonage-sms/whatsapp:
@@ -91,8 +94,7 @@ jobs:
           vonage_number: "$VONAGE_WHATSAPP_TEST_SENDER"
           recipient: "$VONAGE_WHATSAPP_TEST_RECIPIENT"
   test-viber:
-    docker:
-      - image: cimg/base:stable
+    executor: small
     steps:
       - checkout
       - vonage-sms/viber:

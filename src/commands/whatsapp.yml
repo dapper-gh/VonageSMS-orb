@@ -1,5 +1,6 @@
 description: >
   Sends a WhatsApp message using the Vonage API.
+
 parameters:
   api_key:
     type: string
@@ -21,6 +22,7 @@ parameters:
     type: string
     default: "Hello, world!"
     description: "The message to send to the recipient"
+
 steps:
   - jq/install
   - run:
