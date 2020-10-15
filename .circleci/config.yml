@@ -72,14 +72,29 @@ jobs:
           message: "Hello, world! ($CIRCLE_BUILD_ID)"
           vonage_number: "$VONAGE_SMS_TEST_SENDER"
           recipient: "$VONAGE_SMS_TEST_RECIPIENT"
+  test-facebook:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
       - vonage-sms/facebook-messenger:
           message: "Hello, world! ($CIRCLE_BUILD_ID)"
           sender_id: "$VONAGE_FB_TEST_SENDER"
           recipient: "$VONAGE_FB_TEST_RECIPIENT"
+  test-whatsapp:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
       - vonage-sms/whatsapp:
           message: "Hello, world! ($CIRCLE_BUILD_ID)"
           vonage_number: "$VONAGE_WHATSAPP_TEST_SENDER"
           recipient: "$VONAGE_WHATSAPP_TEST_RECIPIENT"
+  test-viber:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
       - vonage-sms/viber:
           message: "Hello, world! ($CIRCLE_BUILD_ID)"
           sender_id: "$VONAGE_VIBER_TEST_SENDER"
