@@ -27,12 +27,12 @@ steps:
       name: Send request
       command: |
         CURL_RESPONSE=$(curl -X POST https://messages-sandbox.nexmo.com/v0.1/messages \
-          -u '<<parameters.api_key>>:<<parameters.api_secret>>' \
+          -u "<<parameters.api_key>>:<<parameters.api_secret>>" \
           -H 'Content-Type: application/json' \
           -H 'Accept: application/json' \
-          -d $(jq -n
-            --arg sender "<<parameters.vonage_number>>"
-            --arg recipient "<<parameters.recipient>>"
+          -d "$(jq -n \
+            --arg sender "<<parameters.vonage_number>>" \
+            --arg recipient "<<parameters.recipient>>" \
             --arg message "<<parameters.message>>" '
             {
               "from": { "type": "whatsapp", "id": $sender },
@@ -44,7 +44,7 @@ steps:
                 }
               }
             }
-          ')')
+          '))")
         echo "-- CURL RESPONSE BELOW --"
         echo "$CURL_RESPONSE"
         test "$(echo "$CURL_RESPONSE" | jq -r ".message_uuid")" != "null"
