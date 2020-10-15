@@ -1,0 +1,16 @@
+description: >
+  An example of sending an SMS through the Vonage API using dapper/vonage-sms
+
+usage:
+  version: 2.1
+  orbs:
+    vonage-sms: dapper/vonage-sms@volatile # Don't actually use @volatile. Semantic versioning is a thing.
+  workflows:
+    vonage:
+      jobs:
+        - vonage-sms/sms:
+            api_key: "f00dbabe"
+            api_secret: "ABCDEFGHI"
+            vonage_number: "15556667777"
+            recipient: "15554206969"
+            message: "Hello, test!"

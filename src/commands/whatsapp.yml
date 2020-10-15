@@ -1,0 +1,51 @@
+description: >
+  Sends a WhatsApp message using the Vonage API.
+parameters:
+  api_key:
+    type: string
+    default: $VONAGE_API_KEY
+    description: "Your Vonage API key"
+  api_secret:
+    type: string
+    default: $VONAGE_API_SECRET
+    description: "Your Vonage API secret"
+  vonage_number:
+    type: string
+    default: $VONAGE_WHATSAPP_NUMBER
+    description: "The phone number associated with your Vonage account"
+  recipient:
+    type: string
+    default: $VONAGE_RECIPIENT_PHONE
+    description: "The phone number of the recipient of the WhatsApp message"
+  message:
+    type: string
+    default: "Hello, world!"
+    description: "The message to send to the recipient"
+steps:
+  - jq/install
+  - run:
+      name: Send request
+      command: |
+        CURL_RESPONSE=$(curl -X POST https://messages-sandbox.nexmo.com/v0.1/messages \
+          -u '<<parameters.api_key>>:<<parameters.api_secret>>' \
+          -H 'Content-Type: application/json' \
+          -H 'Accept: application/json' \
+          -d $(jq -n
+            --arg sender "<<parameters.vonage_number>>"
+            --arg recipient "<<parameters.recipient>>"
+            --arg message "<<parameters.message>>" '
+            {
+              "from": { "type": "whatsapp", "id": $sender },
+              "to": { "type": "whatsapp", "id": $recipient },
+              "message": {
+                "content": {
+                  "type": "text",
+                  "text": $message
+                }
+              }
+            }
+          ')')
+        echo "-- CURL RESPONSE BELOW --"
+        echo "$CURL_RESPONSE"
+        test "$(echo "$CURL_RESPONSE" | jq -r ".message_uuid")" != "null"
+        exit "$?"
